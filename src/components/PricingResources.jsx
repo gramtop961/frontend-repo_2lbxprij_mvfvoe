@@ -28,7 +28,9 @@ const tiers = [
 const PricingResources = () => {
   return (
     <section id="pricing" className="relative bg-white">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-20">
+      <div className="pointer-events-none absolute inset-x-0 -top-20 mx-auto h-64 w-[80%] rounded-full bg-gradient-to-r from-cyan-400/10 via-fuchsia-400/10 to-blue-400/10 blur-3xl" />
+
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-8 py-20">
         <div className="max-w-3xl mb-10">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">Pricing</h2>
           <p className="mt-3 text-gray-600">Simple, transparent pricing that scales with you.</p>
@@ -39,37 +41,40 @@ const PricingResources = () => {
             <div
               key={tier.name}
               className={
-                'rounded-2xl border p-6 shadow-sm ' +
+                'group relative rounded-2xl border p-6 shadow-sm transition transform-gpu hover:-translate-y-0.5 hover:shadow-lg ' +
                 (tier.highlight
-                  ? 'border-violet-200 bg-gradient-to-br from-violet-50 to-blue-50'
-                  : 'border-gray-100 bg-white')
+                  ? 'border-violet-200 bg-gradient-to-br from-violet-50 to-cyan-50'
+                  : 'border-gray-100 bg-white/90 backdrop-blur-sm')
               }
             >
-              <div className="flex items-baseline gap-2">
-                <h3 className="text-lg font-semibold text-gray-900">{tier.name}</h3>
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-300 blur-xl bg-gradient-to-br from-cyan-500/10 to-fuchsia-500/10" aria-hidden="true" />
+              <div className="relative">
+                <div className="flex items-baseline gap-2">
+                  <h3 className="text-lg font-semibold text-gray-900">{tier.name}</h3>
+                </div>
+                <div className="mt-2 flex items-end gap-1">
+                  <div className="text-3xl font-extrabold text-gray-900">{tier.price}</div>
+                  <div className="text-gray-500">{tier.period}</div>
+                </div>
+                <ul className="mt-4 space-y-2">
+                  {tier.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-sm text-gray-700">
+                      <Check className="mt-0.5 size-4 text-violet-600" /> {f}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href="#resources"
+                  className={
+                    'mt-6 inline-flex items-center gap-2 rounded-lg px-4 py-2 font-semibold transform-gpu hover:-translate-y-0.5 ' +
+                    (tier.highlight
+                      ? 'bg-gradient-to-r from-cyan-500 to-fuchsia-600 text-white hover:from-cyan-400 hover:to-fuchsia-500'
+                      : 'bg-gray-900 text-white hover:bg-black')
+                  }
+                >
+                  Choose {tier.name} <ArrowRight className="size-4" />
+                </a>
               </div>
-              <div className="mt-2 flex items-end gap-1">
-                <div className="text-3xl font-extrabold text-gray-900">{tier.price}</div>
-                <div className="text-gray-500">{tier.period}</div>
-              </div>
-              <ul className="mt-4 space-y-2">
-                {tier.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-sm text-gray-700">
-                    <Check className="mt-0.5 size-4 text-violet-600" /> {f}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href="#resources"
-                className={
-                  'mt-6 inline-flex items-center gap-2 rounded-lg px-4 py-2 font-semibold ' +
-                  (tier.highlight
-                    ? 'bg-violet-600 text-white hover:bg-violet-700'
-                    : 'bg-gray-900 text-white hover:bg-black')
-                }
-              >
-                Choose {tier.name} <ArrowRight className="size-4" />
-              </a>
             </div>
           ))}
         </div>
@@ -101,16 +106,19 @@ const PricingResources = () => {
               <a
                 key={item.title}
                 href={item.href}
-                className="group rounded-2xl bg-gray-50 hover:bg-gray-100 transition border border-gray-100 p-6 block"
+                className="group relative rounded-2xl bg-gray-50 hover:bg-white transition border border-gray-100 p-6 block overflow-hidden"
               >
-                <div className="flex items-center gap-2 text-gray-900">
-                  <BookOpen className="size-5 text-violet-600" />
-                  <h3 className="font-semibold">{item.title}</h3>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 blur-xl bg-gradient-to-br from-cyan-500/10 to-fuchsia-500/10" aria-hidden="true" />
+                <div className="relative">
+                  <div className="flex items-center gap-2 text-gray-900">
+                    <BookOpen className="size-5 text-violet-600" />
+                    <h3 className="font-semibold">{item.title}</h3>
+                  </div>
+                  <p className="mt-2 text-sm text-gray-600">{item.desc}</p>
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-violet-700">
+                    Explore <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                  </span>
                 </div>
-                <p className="mt-2 text-sm text-gray-600">{item.desc}</p>
-                <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-violet-700">
-                  Explore <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-                </span>
               </a>
             ))}
           </div>
